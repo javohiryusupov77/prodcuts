@@ -1,11 +1,9 @@
-import React from 'react'
+import React from "react";
 
 export default function page() {
   return (
     <div>
-        <h2>
-            Teacher page
-        </h2>
+      <h1 style={{textAlign:"center"}}>Still creating</h1>
     </div>
-  )
+  );
 }
