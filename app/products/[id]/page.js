@@ -1,14 +1,35 @@
-import React from 'react';
+import React from "react";
 
 export default async function Page({ params }) {
   const res = await fetch(`https://fakestoreapi.com/products/${params.id}`);
   const product = await res.json();
 
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        stars.push(<span key={i} className="text-yellow-500">&#9733;</span>);
+      } else {
+        stars.push(<span key={i} className="text-gray-400">&#9733;</span>);
+      }
+    }
+    return stars;
+  };
+
   return (
-    <div className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md space-y-4">
-      <h1 className="text-2xl font-bold text-gray-900">{product.title}</h1>
-      <p className="text-xl text-green-500">${product.price}</p>
-      <p className="text-gray-700">{product.description}</p>
+    <div className="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-lg space-y-6">
+      <h1 className="text-3xl font-semibold text-gray-800">{product.title}</h1>
+      <p className="text-2xl text-green-600">${product.price}</p>
+      <div className="text-gray-700 space-y-2">
+        <p>{product.description}</p>
+        <div className="flex items-center space-x-2">
+          <div className="flex items-center">
+            {renderStars(Math.round(product.rating.rate))}
+            <span className="ml-2 text-yellow-500 font-semibold">{product.rating.rate}</span>
+          </div>
+          <span className="text-gray-600">({product.rating.count} reviews)</span>
+        </div>
+      </div>
       <div className="w-full h-64">
         <img
           className="w-full h-full object-contain rounded-md"
@@ -19,3 +40,4 @@ export default async function Page({ params }) {
     </div>
   );
 }
+
